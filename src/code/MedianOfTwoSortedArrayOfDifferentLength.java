@@ -1,54 +1,70 @@
 package code;
 
 public class MedianOfTwoSortedArrayOfDifferentLength {
-	
-	public double findMedianOfTwoSortedArrayOfDifferentLength(int[] x, int[] y) {
-		
-		// 1. init vars
-		int xSize = x.length;
-		int ySize = y.length;
-		
-		// we want to partition smaller array
-		if (xSize > ySize) {
-			return findMedianOfTwoSortedArrayOfDifferentLength(y, x);
-		}
-		
-		int low = 0;
-		int high = xSize;
-		
-		while (low <= high){
-			// 2. partition lefts and rights
-			int partX = (low + high) / 2;
-			int partY = (xSize + ySize) / 2 - partX;
-			int maxLeftX = (partX == 0) ? Integer.MIN_VALUE : x[partX - 1];
-			int minRightX = (partX == xSize) ? Integer.MAX_VALUE : x[partX];
-			int maxLeftY = (partY == 0) ? Integer.MIN_VALUE : y[partY - 1];
-			int minRightY = (partY == ySize) ? Integer.MAX_VALUE : y[partY];
-			
-			boolean case1 = maxLeftX < minRightY;
-			boolean case2 = maxLeftY < minRightX;
-			if (case1 && case2) {
-				if ((xSize + ySize) % 2 == 0) {
-					return (Math.max(maxLeftX, maxLeftY) + Math.min(minRightX, minRightY)) / 2;
-				} else {
-					return (Math.min(minRightX, minRightY) * 1.0);
-				}
-			} else if (!case1) {
-				high -= 1;
-			} else {
-				low += 1;
-			}
-		}
-		
-		throw new RuntimeException();
-	}
+	public double findMedianSortedArrays(int[] nums1, int[] nums2) {
+
+	    int xl = nums1.length;
+	    int yl = nums2.length;
+	    
+	    // Case 1: nums1 is empty.
+	    if (xl == 0) {
+	        if (yl % 2 == 0) {
+	            return (nums2[(yl / 2) - 1] + nums2[yl / 2]) / 2.0;
+	        }
+	        return nums2[yl / 2] * 1.0;
+	    }
+	    
+	    // Case 2: nums2 is empty.
+	    if (yl == 0) {
+	        if (xl % 2 == 0) {
+	            return (nums1[(xl / 2) - 1] + nums1[xl / 2]) / 2.0;
+	        }
+	        return nums1[xl / 2] * 1.0;
+	    }
+	    
+	    // Case 3: Both arrays are not empty.
+	    if (xl > yl) {
+	        return findMedianSortedArrays(nums2, nums1);
+	    }
+	    
+	    int l = 0;
+	    int h = xl;
+
+	    while (l <= h) {
+	    	int xp = (l + h) / 2;
+	        int yp = (xl + yl) / 2 - xp;
+	        int lx = (xp == 0) ? Integer.MIN_VALUE : nums1[xp - 1];
+	        int rx = (xp == xl) ? Integer.MAX_VALUE : nums1[xp];
+	        int ly = (yp == 0) ? Integer.MIN_VALUE : nums2[yp - 1];
+	        int ry = (yp == yl) ? Integer.MAX_VALUE : nums2[yp];
+	        
+	        boolean case1 = lx <= ry;
+	        boolean case2 = ly <= rx;
+	        
+	        if (case1 && case2) {
+	            if ((xl + yl) % 2 == 0) {
+	                return (Math.max(lx, ly) + Math.min(rx, ry)) / 2.0;
+	                
+	            } else {
+	                return Math.min(rx, ry) * 1.0;
+	            }
+	            
+	        } else if (!case1) {
+	            h = xp - 1;
+	        } else {
+	            l = xp + 1;
+	        }
+	    }
+	    
+	    return 0.0;
+    }
 	
 	public static void main(String[] args) {
-		int[] x = {1, 3, 8, 9, 15};
-		int[] y = {7, 11, 19, 21, 18, 25};
+		int[] x = {1};
+		int[] y = {2, 3, 4};
 		
 		final MedianOfTwoSortedArrayOfDifferentLength engine = new MedianOfTwoSortedArrayOfDifferentLength();
-		System.out.println(engine.findMedianOfTwoSortedArrayOfDifferentLength(x, y));
+		System.out.println(engine.findMedianSortedArrays(x, y));
 	}
 
 }

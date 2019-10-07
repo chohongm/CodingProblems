@@ -34,9 +34,6 @@ public class ShortestPath {
                 {1, 1, 0, 0, 0, 0, 1, 0, 0, 1 }};
 		
 		boolean[][] visited = new boolean[graph.length][graph[0].length];
-		for (boolean[] r : visited) {
-			Arrays.fill(r, false);
-		}
 		
 		int[] origin = {0, 0};
 		int[] target = {3, 4};
@@ -79,22 +76,11 @@ public class ShortestPath {
 		int y = pos[1];
 		
 		// 1. check within grid
-		if (x < 0 || x >= rs || y < 0 || y >= cs) {
-			return false;
-		}
+		if (x < 0 || x >= rs || y < 0 || y >= cs) return false;
 		
-		// 2. check not visited.
-		boolean isVisited = v[x][y];
-		if (isVisited) {
-			return false;
-		}
-		
-		// 3. check not blocked.
-		int isBlocked = graph[x][y];
-		if (isBlocked == 0) {
-			return false;
-		}
-		
+		// 2. check not blocked. check not visited.
+		if (graph[x][y] == 0|| v[x][y]) return false;
+				
 		return true;
 	}
 

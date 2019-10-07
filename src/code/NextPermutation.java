@@ -6,39 +6,37 @@ public class NextPermutation {
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		int[] arr = {1, 8, 4, 7, 6, 5, 3, 1};
-		System.out.println(Arrays.toString(findNextPermutation(arr)));
+		nextPermutation(arr);
+		System.out.println(Arrays.toString(arr));
 	}
 	
-	public static int[] findNextPermutation(int[] perm) {
-		// [1, 8, 4, 7, 6, 5, 3, 1]
-		// 1. backtrack to find the first non-increasing element.
-		int end = perm.length;
-		int i = end - 2;
-		while (perm[i] > perm[i + 1]) {
-			i--;
-		}
-		// 2. swap with the number that is just larger than i
-		int j = end - 1;
-		while (perm[j] < perm[i]) {
-			j--;
-		}
-		
-		swap(perm, i, j);
-		reverse(perm, i + 1, end - 1);
-		return perm;
-	}
-	
-	public static void swap(int [] perm, int i, int j) {
-		int temp = perm[i];
-		perm[i] = perm[j];
-		perm[j] = temp;
-	}
-	
-	public static void reverse(int[] perm, int i, int j) {
-		while(i < j) {
-			swap(perm, i, j);
-			i++;
-			j--;
-		}
-	}
+    public static void nextPermutation(int[] nums) {
+        int i = nums.length - 2;
+        while (i >= 0 && nums[i] >= nums[i + 1]) {
+            i--;
+        }
+        if (i >= 0) {
+            int j = nums.length - 1;
+            while (j >= 0 && nums[j] <= nums[i]) {
+                j--;
+            }
+            swap(nums, i, j);
+        }
+        reverse(nums, i + 1);
+    }
+
+    private static void reverse(int[] nums, int start) {
+        int i = start, j = nums.length - 1;
+        while (i < j) {
+            swap(nums, i, j);
+            i++;
+            j--;
+        }
+    }
+
+    private static void swap(int[] nums, int i, int j) {
+        int temp = nums[i];
+        nums[i] = nums[j];
+        nums[j] = temp;
+    }
 }

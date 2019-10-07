@@ -6,6 +6,46 @@ import java.util.Map;
 public class LongestSubstring {
 
 	
+	public static int lengthOfLongestSubstring(String s) {
+		int n = s.length();
+		int max = 0;
+		Map<Character, Integer> map = new HashMap<>();
+		
+		for (int i = 0, j = 0; j < n; j++) {
+			char c = s.charAt(j);
+			if (map.containsKey(c)) {
+				i = map.get(c) + 1;
+			}
+			
+			max = Math.max(max, j - i + 1);
+		}
+		
+		return max;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public static int findLongestSubstring(final String s) {
 		int n = s.length(), ans = 0;
         Map<Character, Integer> map = new HashMap<>(); // current index of character

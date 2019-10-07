@@ -100,6 +100,8 @@ public class DataFilteringProblem2 {
 			}
 		}
 		
+		// Better solution: 
+		// https://stackoverflow.com/questions/18971849/best-way-to-get-top-n-keyssorted-by-values-in-a-hashmap
 		List<Pair<String, Integer>> topThreeSites = new ArrayList<>();
 		siteToLatestUserCount.entrySet().stream().sorted(new Comparator<Map.Entry<String, Integer>>() {
 			@Override
